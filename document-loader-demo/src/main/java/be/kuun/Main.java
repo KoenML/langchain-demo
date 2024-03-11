@@ -21,16 +21,16 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 
 public class Main {
 
-    private final static String MODEL = "gpt-3.5-turbo-0125";
-    private final static String EMBED_MODEL = "text-embedding-3-large";
+    private final static String MODEL = "mistral";
+    // private final static String EMBED_MODEL = "text-embedding-3-large"; => OpenAI uses a different model for embedding
     public static void main(String[] args) {
-        ModelService models = new OpenAiModelService();
-        EmbeddingService embeddings = new OpenAiEmbeddingService();
+        ModelService models = new OllamaModelService();
+        EmbeddingService embeddings = new OllamaEmbeddingService();
         DocumentService documents = new PdfDocumentService();
 
         ChatLanguageModel cModel = models.getModel(MODEL);
 
-        EmbeddingModel eModel = embeddings.getModel(EMBED_MODEL);
+        EmbeddingModel eModel = embeddings.getModel(MODEL);
         EmbeddingStore<TextSegment> eStore = embeddings.getStore();
         EmbeddingStoreIngestor ingestor = embeddings.getIngestor(eModel, eStore);
         EmbeddingStoreContentRetriever retriever = embeddings.getRetriever(eModel, eStore);
